@@ -273,7 +273,7 @@ template<typename Address_t> int32_t ScanChunkForAddress(uint8_t* pBuf, uint32_t
 	assert(pBuf != nullptr);
 	assert(pReferencedAddress != nullptr);
 
-	for (int32_t nOffset = 0; nOffset < dwSize; nOffset++) {
+	for (int32_t nOffset = 0; nOffset < dwSize - sizeof(Address_t); nOffset++) {
 		Address_t PotentialAddress = *(Address_t*)&pBuf[nOffset];
 
 		if (!dwRegionSize && PotentialAddress == reinterpret_cast<Address_t>(pReferencedAddress)) {
