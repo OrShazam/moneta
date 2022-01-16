@@ -88,7 +88,7 @@ PeVm::Body::Body(Processes::Process& OwnerProc, vector<Subregion*> Subregions, c
 					uint8_t* pSubregionStartVa = static_cast<uint8_t *>((*SbrItr)->GetBasic()->BaseAddress);
 					uint8_t* pSubregionEndVa = static_cast<uint8_t *>((*SbrItr)->GetBasic()->BaseAddress) + (*SbrItr)->GetBasic()->RegionSize;
 					
-					if ((pSubregionStartVa >= pSectStartVa && pSubregionStartVa < pSectEndVa) || (pSubregionEndVa > pSectStartVa&& pSubregionEndVa <= pSectEndVa) || (pSubregionStartVa < pSectStartVa && pSubregionEndVa > pSectEndVa)) {
+					if (!(pSubregionStartVa >= pSectEndVa) || !(pSubregionEndVa < pSectStartVa)) {
 						Interface::Log(Interface::VerbosityLevel::Debug, "... section %s [0x%p:0x%p] corresponds to subregion [0x%p:0x%p]\r\n", ArtificialPeHdr.Name, pSectStartVa, pSectEndVa, pSubregionStartVa, pSubregionEndVa);
 						MEMORY_BASIC_INFORMATION* Mbi = new MEMORY_BASIC_INFORMATION; // When duplicating subregions, all heap allocated memory must be cloned so that no addresses are double referenced/double freed
 						memcpy(Mbi, (*SbrItr)->GetBasic(), sizeof(MEMORY_BASIC_INFORMATION));
